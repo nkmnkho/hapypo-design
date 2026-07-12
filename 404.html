@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Hapypo Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="kinetic-orange.css">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+        .error-code {
+            font-family: var(--font-display);
+            font-size: clamp(8rem, 20vw, 16rem);
+            line-height: 1;
+            color: var(--orange);
+            letter-spacing: -0.04em;
+        }
+        .error-text {
+            font-family: var(--font-mono);
+            font-size: clamp(14px, 2vw, 18px);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin: 24px 0 48px;
+            color: rgba(255,255,255,0.7);
+        }
+        .error-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            padding: 16px 40px;
+            background: var(--orange);
+            color: var(--black);
+            border: 2px solid var(--orange);
+            transition: all 0.3s;
+        }
+        .error-link:hover {
+            background: var(--white);
+            border-color: var(--white);
+        }
+        .error-link svg { width: 16px; height: 16px; }
+        @media (max-width: 768px) {
+            .error-page { padding: 24px; }
+            .error-text { margin: 16px 0 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-page">
+        <div class="error-code">404</div>
+        <p class="error-text">Halaman yang anda cari tidak wujud</p>
+        <a href="kinetic-orange.html" class="error-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Kembali ke Home
+        </a>
+    </div>
+</body>
+</html>

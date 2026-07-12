@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — Hapypo Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <link rel="stylesheet" href="kinetic-orange.css">
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+    <style>
+        .geran-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--black);
+            transition: opacity 0.2s;
+        }
+        .geran-back:hover { opacity: 0.6; }
+        .work-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 140px 48px 60px;
+            background: var(--orange);
+        }
+        .work-hero h1 {
+            font-family: var(--font-display);
+            font-size: 12vw;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 0.85;
+            color: var(--black);
+        }
+
+        .projects-section {
+            background: var(--black);
+            color: var(--white);
+            padding: 100px 48px;
+        }
+        .projects-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+        .project-item {
+            cursor: pointer;
+        }
+        .project-img {
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            position: relative;
+            background: var(--black);
+            border: 2px solid rgba(255,255,255,0.2);
+            transform: scale(0.95);
+            transition: transform 0.8s;
+        }
+        .project-img.revealed {
+            transform: scale(1);
+        }
+        .project-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: filter 0.5s, transform 0.5s;
+        }
+        .project-item:hover .project-img img {
+            filter: grayscale(0);
+            transform: scale(1.05);
+        }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .project-item:hover .project-overlay { opacity: 1; }
+        .project-icon {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--orange);
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.4s, transform 0.4s;
+            color: var(--white);
+        }
+        .project-item:hover .project-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project-icon svg { width: 18px; height: 18px; }
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .project-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+        .project-sub {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .project-category {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .project-year {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--orange);
+        }
+
+        @media (max-width: 768px) {
+            .work-hero { padding: 120px 24px 40px; }
+            .work-hero h1 { font-size: 12vw; }
+            .projects-section { padding: 64px 24px; }
+            .project-grid { grid-template-columns: 1fr; gap: 32px; }
+            .project-title { font-size: 20px; }
+        }
+        @media (max-width: 480px) {
+            .work-hero { padding: 100px 16px 32px; }
+            .work-hero h1 { font-size: 10vw; }
+            .projects-section { padding: 40px 16px; }
+            .project-grid { gap: 24px; }
+            .project-title { font-size: 16px; }
+            .project-category, .project-year { font-size: 10px; }
+        }
+
+        .project-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+        .filter-btn {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            background: none;
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.25s;
+            border-radius: 0;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+        .project-item.hidden {
+            display: none;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0,0,0,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            padding: 48px;
+        }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+        }
+        .lightbox-close svg {
+            width: 24px;
+            height: 24px;
+        }
+        @media (max-width: 768px) {
+            .project-filters { gap: 8px; margin-bottom: 32px; }
+            .filter-btn { font-size: 10px; padding: 8px 16px; }
+            .lightbox { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-screen" id="loadingScreen">
+        <img src="images/logo.svg.png" alt="Hapypo Design">
+    </div>
+    <div class="page-overlay" id="pageOverlay"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="noise-overlay"></div>
+    <div class="cursor-diff" id="cursorDiff"></div>
+
+    <nav class="nav">
+        <a href="kinetic-orange.html" class="nav-logo"><img src="images/logo.svg.png" alt="Hapypo Design"></a>
+        <div class="nav-pill">
+            <a href="kinetic-orange.html">Home</a>
+            <a href="index.html">Work</a>
+            <a href="kinetic-orange.html#about">About</a>
+            <a href="geran-mara.html">MARA</a>
+            <a href="kinetic-orange.html#contact">Contact</a>
+        </div>
+
+    </nav>
+
+    <section class="work-hero reveal">
+        <div>
+            <a href="kinetic-orange.html" class="geran-back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </a>
+            <h1>Our Work</h1>
+        </div>
+    </section>
+
+    <section class="projects-section reveal">
+        <div class="projects-inner">
+            <div class="project-grid">
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="branding">Branding</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="design">Design</button>
+                    <button class="filter-btn" data-filter="marketing">Marketing</button>
+                    <button class="filter-btn" data-filter="systems">Systems</button>
+                </div>
+                <div class="project-item" data-category="branding">
+                    <div class="project-img">
+                        <img src="images/portfolio-1.jpg" alt="Nusantara Branding">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">Nusantara</span>
+                        <div class="project-sub">
+                            <span class="project-category">Brand Identity</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item" data-category="web">
+                    <div class="project-img">
+                        <img src="images/portfolio-2.jpg" alt="Warung Digital">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">Warung Digital</span>
+                        <div class="project-sub">
+                            <span class="project-category">Web Development</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item" data-category="branding">
+                    <div class="project-img">
+                        <img src="images/portfolio-3.jpg" alt="BumiHQ Rebrand">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">BumiHQ</span>
+                        <div class="project-sub">
+                            <span class="project-category">Rebranding</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item" data-category="design">
+                    <div class="project-img">
+                        <img src="images/portfolio-4.jpg" alt="Kraftangan App">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">Kraftangan</span>
+                        <div class="project-sub">
+                            <span class="project-category">UI/UX Design</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item" data-category="marketing">
+                    <div class="project-img">
+                        <img src="images/portfolio-5.jpg" alt="MARA Digital Campaign">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">MARA Campaign</span>
+                        <div class="project-sub">
+                            <span class="project-category">Digital Marketing</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-item" data-category="systems">
+                    <div class="project-img">
+                        <img src="images/portfolio-6.jpg" alt="Inspirasi Motion">
+                        <div class="project-overlay"></div>
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-title">Inspirasi</span>
+                        <div class="project-sub">
+                            <span class="project-category">Business Systems</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <button class="back-top" id="backTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+
+    <footer class="footer-ko">
+        <div class="footer-ko-inner">
+            <span class="footer-ko-copy">&copy; 2026 HAPYPO ENTERPRISE</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            setTimeout(function() {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 600);
+
+            var overlay = document.getElementById('pageOverlay');
+            document.querySelectorAll('.nav-pill a, .nav-logo').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href && !href.startsWith('#') && href !== window.location.pathname.split('/').pop()) {
+                        e.preventDefault();
+                        overlay.classList.add('active');
+                        var self = this;
+                        setTimeout(function() {
+                            window.location.href = self.getAttribute('href');
+                        }, 400);
+                    }
+                });
+            });
+
+            /* ─── NAV ACTIVE ─── */
+            var current = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-pill a').forEach(function(a) {
+                var h = a.getAttribute('href');
+                if (h === current) { a.classList.add('active'); }
+            });
+
+            var pb = document.getElementById('progressBar');
+            var bt = document.getElementById('backTop');
+
+            function updateScrollUI() {
+                var h = document.documentElement.scrollHeight - window.innerHeight;
+                pb.style.width = (window.scrollY / h * 100) + '%';
+                bt.classList.toggle('visible', window.scrollY > 400);
+            }
+
+            /* ─── LENIS ─── */
+            if (typeof Lenis !== 'undefined') {
+                var lenis = new Lenis();
+                lenis.on('scroll', function(e) { updateScrollUI(); });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            }
+            window.addEventListener('scroll', updateScrollUI);
+
+            bt.addEventListener('click', function() {
+                if (typeof lenis !== 'undefined') { lenis.scrollTo(0); }
+                else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            });
+
+            /* ─── SMOOTH ANCHOR ─── */
+            document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        if (typeof lenis !== 'undefined') { lenis.scrollTo(target); }
+                        else { target.scrollIntoView({ behavior: 'smooth' }); }
+                    }
+                });
+            });
+
+            /* ─── SECTION REVEAL ─── */
+            var revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+            /* ─── IMAGE REVEAL ─── */
+            var imgReveal = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        imgReveal.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            document.querySelectorAll('.project-img').forEach(function(img) { imgReveal.observe(img); });
+
+            /* ─── MAGNETIC ─── */
+            document.querySelectorAll('.magnetic').forEach(function(el) {
+                el.addEventListener('mousemove', function(e) {
+                    var r = this.getBoundingClientRect();
+                    var x = e.clientX - r.left - r.width / 2;
+                    var y = e.clientY - r.top - r.height / 2;
+                    this.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+                });
+                el.addEventListener('mouseleave', function() { this.style.transform = ''; });
+            });
+
+            /* ─── FILTER ─── */
+            document.querySelectorAll('.filter-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    var filter = this.getAttribute('data-filter');
+                    document.querySelectorAll('.project-item').forEach(function(item) {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            /* ─── LIGHTBOX ─── */
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImg');
+            document.querySelectorAll('.project-img').forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    var src = this.querySelector('img').src;
+                    lightboxImg.src = src;
+                    lightbox.classList.add('open');
+                });
+            });
+            document.getElementById('lightboxClose').addEventListener('click', function() {
+                lightbox.classList.remove('open');
+            });
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === this) { lightbox.classList.remove('open'); }
+            });
+
+            /* ─── CURSOR ─── */
+            var isTouch = window.matchMedia('(pointer: coarse)').matches;
+            if (!isTouch) {
+                var cursor = document.getElementById('cursorDiff');
+                var mx = 0, my = 0, cx = 0, cy = 0;
+                document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+                function animCursor() {
+                    cx += (mx - cx) * 0.15;
+                    cy += (my - cy) * 0.15;
+                    cursor.style.left = cx + 'px';
+                    cursor.style.top = cy + 'px';
+                    requestAnimationFrame(animCursor);
+                }
+                animCursor();
+                document.querySelectorAll('a, button, .project-item').forEach(function(el) {
+                    el.addEventListener('mouseenter', function() { cursor.classList.add('scale'); });
+                    el.addEventListener('mouseleave', function() { cursor.classList.remove('scale'); });
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

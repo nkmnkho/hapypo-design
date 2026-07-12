@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geran Digitalisasi MARA — Hapypo Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <link rel="stylesheet" href="kinetic-orange.css">
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+    <style>
+        .geran-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 48px 60px;
+            background: var(--orange);
+        }
+        .geran-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            color: var(--black);
+            margin-bottom: 24px;
+        }
+        .mara-highlight {
+            font-size: 1.4em;
+            color: var(--white);
+            display: inline-block;
+        }
+
+        .geran-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--black);
+            transition: opacity 0.2s;
+        }
+        .geran-back:hover { opacity: 0.6; }
+
+        .geran-content {
+            background: var(--black);
+            color: var(--white);
+            padding: 100px 48px;
+        }
+        .geran-content-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .geran-content p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .geran-content strong { color: var(--white); }
+
+        .geran-highlight {
+            display: inline;
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .geran-boxes {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+        .geran-box {
+            flex: 1;
+            max-width: 400px;
+            padding: 32px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .geran-box h4 {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .geran-box h4 svg {
+            width: 14px; height: 14px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .geran-box ul { list-style: none; }
+        .geran-box li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 6px;
+            padding-left: 12px;
+            border-left: 2px solid var(--orange);
+        }
+
+        .geran-mono-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            display: block;
+            text-align: center;
+        }
+
+        .geran-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 64px;
+        }
+        .geran-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 28px 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: background 0.3s;
+        }
+        .geran-step:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .geran-step-num {
+            font-family: var(--font-display);
+            font-size: 32px;
+            color: var(--orange);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .geran-step h5 {
+            font-family: var(--font-display);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .geran-step p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+        }
+
+        .geran-form-wrap {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+        }
+        .required { color: var(--orange); }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--white);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .btn-geran {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--orange);
+            color: var(--black);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            padding: 16px 40px;
+            border: 2px solid var(--orange);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-geran:hover {
+            background: var(--black);
+            color: var(--orange);
+        }
+        .btn-geran svg {
+            width: 16px; height: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .geran-hero { padding: 120px 24px 40px; }
+            .geran-hero h1 { font-size: clamp(2.5rem, 10vw, 5rem); }
+            .geran-content { padding: 64px 24px; }
+            .geran-content p { font-size: 15px; }
+            .geran-boxes, .geran-steps { flex-direction: column; }
+            .geran-box { max-width: 100%; }
+            .geran-box li { font-size: 13px; }
+            .geran-step { padding: 20px 16px; }
+            .geran-step h5 { font-size: 12px; }
+            .geran-form-wrap { padding: 48px 24px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .geran-hero { padding: 100px 16px 32px; }
+            .geran-hero h1 { font-size: clamp(2rem, 12vw, 3.5rem); }
+            .mara-highlight { font-size: 1.2em; }
+            .geran-back { font-size: 10px; }
+            .geran-content { padding: 40px 16px; }
+            .geran-content p { font-size: 14px; margin-bottom: 32px; }
+            .geran-box { padding: 24px; }
+            .geran-box h4 { font-size: 10px; }
+            .geran-box li { font-size: 12px; padding-left: 8px; }
+            .geran-mono-label { font-size: 10px; }
+            .geran-step { padding: 16px 12px; }
+            .geran-step-num { font-size: 24px; }
+            .geran-step h5 { font-size: 11px; }
+            .geran-step p { font-size: 10px; }
+            .geran-form-wrap { padding: 32px 0; }
+            .form-group label { font-size: 10px; }
+            .form-group input, .form-group textarea { font-size: 12px; padding: 12px; }
+            .btn-geran { font-size: 10px; padding: 12px 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-screen" id="loadingScreen">
+        <img src="images/logo.svg.png" alt="Hapypo Design">
+    </div>
+    <div class="page-overlay" id="pageOverlay"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="noise-overlay"></div>
+    <div class="cursor-diff" id="cursorDiff"></div>
+
+    <nav class="nav">
+        <a href="kinetic-orange.html" class="nav-logo"><img src="images/logo.svg.png" alt="Hapypo Design"></a>
+        <div class="nav-pill">
+            <a href="kinetic-orange.html">Home</a>
+            <a href="index.html">Work</a>
+            <a href="kinetic-orange.html#about">About</a>
+            <a href="geran-mara.html">MARA</a>
+            <a href="kinetic-orange.html#contact">Contact</a>
+        </div>
+
+    </nav>
+
+    <section class="geran-hero reveal">
+        <div>
+            <a href="kinetic-orange.html" class="geran-back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </a>
+            <h1>Geran Digitalisasi<br><span class="mara-highlight">MARA</span></h1>
+        </div>
+    </section>
+
+    <section class="geran-content reveal">
+        <div class="geran-content-inner">
+            <p>Geran Digitalisasi MARA adalah inisiatif oleh <strong>Majlis Amanah Rakyat (MARA)</strong> untuk membantu usahawan Bumiputera Malaysia beralih ke platform digital. Geran ini <strong>one-off, tidak perlu dibayar balik</strong>, dan bernilai sehingga <strong>RM20,000</strong>.</p>
+
+            <div class="geran-boxes">
+                <div class="geran-box">
+                    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Kelayakan</h4>
+                    <ul>
+                        <li>Usahawan Bumiputera warganegara Malaysia</li>
+                        <li>Berdaftar dengan SSM (perniagaan aktif)</li>
+                        <li>Berumur 18–60 tahun</li>
+                    </ul>
+                </div>
+                <div class="geran-box">
+                    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Skop Geran</h4>
+                    <ul>
+                        <li>Pembangunan laman web & e-dagang</li>
+                        <li>Pemasaran digital & pengiklanan</li>
+                        <li>Perisian perniagaan & automasi</li>
+                        <li>Persediaan media sosial</li>
+                    </ul>
+                </div>
+            </div>
+
+            <span class="geran-mono-label">Cara Memohon</span>
+            <div class="geran-steps">
+                <div class="geran-step">
+                    <div class="geran-step-num">01</div>
+                    <h5>Download Borang & Print</h5>
+                    <p>Isi & lengkapkan borang</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">02</div>
+                    <h5>Hantar Dokumen</h5>
+                    <p>Pergi hantar ke pejabat MARA terdekat mengikut poskod premis anda</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">03</div>
+                    <h5>Tunggu Pengesahan</h5>
+                    <p>Tunggu panggilan dari MARA</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">04</div>
+                    <h5>Jika Lulus</h5>
+                    <p>Anda perlu membuat pembayaran sebanyak 10% daripada jumlah geran yang diluluskan kepada MARA</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">05</div>
+                    <h5>Pelaksanaan Perkhidmatan</h5>
+                    <p>Perkhidmatan yang telah dipersetujui akan disampaikan oleh pemudahcara.</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">06</div>
+                    <h5>Submit Kerja</h5>
+                    <p>Anda perlu menandatangani dan mengesahkan pesanan perkhidmatan.</p>
+                </div>
+                <div class="geran-step">
+                    <div class="geran-step-num">07</div>
+                    <h5>Hantar</h5>
+                    <p>Dokumen pengesahan bersama dengan invois perlu dihantar semula kepada pihak MARA daerah melalui serahan tangan untuk memastikan pembayaran geran disalurkan.</p>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-bottom:64px;">
+                <a href="Borang Geran DigitalBiz.pdf" download class="btn-geran magnetic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Borang
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="geran-content reveal" style="border-top: 2px solid var(--orange);">
+        <div class="geran-form-wrap">
+            <span class="geran-mono-label">Daftar Sekarang</span>
+            <p style="text-align:center;color:rgba(255,255,255,0.7);margin-bottom:32px;font-size:14px;">Isi borang di bawah dan kami akan bantu uruskan permohonan GERAN MARA anda.</p>
+            <form id="geranForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="geranName">Nama Penuh <span class="required">*</span></label>
+                        <input type="text" id="geranName" name="geranName" placeholder="Nama penuh seperti IC" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="geranPhone">No. Telefon <span class="required">*</span></label>
+                        <input type="tel" id="geranPhone" name="geranPhone" placeholder="01X-XXXXXXX" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="geranBusiness">Nama Perniagaan <span class="required">*</span></label>
+                        <input type="text" id="geranBusiness" name="geranBusiness" placeholder="Nama perniagaan / syarikat" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="geranType">Jenis Perniagaan <span class="required">*</span></label>
+                        <input type="text" id="geranType" name="geranType" placeholder="Contoh: F&B, Fabrik, Teknologi" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="geranEmail">Email</label>
+                    <input type="email" id="geranEmail" name="geranEmail" placeholder="email@contoh.com">
+                </div>
+                <div class="form-group">
+                    <label for="geranMessage">Mesej / Soalan (optional)</label>
+                    <textarea id="geranMessage" name="geranMessage" rows="3" placeholder="Ada soalan tentang geran MARA? Tanya di sini..."></textarea>
+                </div>
+                <button type="submit" class="btn-geran magnetic">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.609-3.807c1.676.995 3.598 1.521 5.555 1.522 5.438 0 9.864-4.424 9.866-9.861.001-2.634-1.024-5.111-2.883-6.983-1.86-1.872-4.332-2.904-6.966-2.904-5.438 0-9.864 4.423-9.866 9.86-.001 2.035.62 4.021 1.789 5.724l-1.147 4.192 4.652-1.541-.001.001z"/><path d="M11.365 13.77c-.316-.19-1.31-.763-1.484-.883-.173-.121-.345-.165-.345-.343s.172-.421.258-.507c.086-.086.184-.108.276-.108s.146-.071.22-.106c.108-.053.16-.149.235-.274.078-.127.047-.365-.024-.572-.066-.196-.535-1.605-.734-2.203-.192-.577-.383-.533-.517-.543-.132-.009-.287-.012-.441-.012-.155 0-.405.058-.617.291-.212.233-.809.79-.809 1.928 0 1.138.829 2.237.945 2.392.116.155 1.632 2.492 3.954 3.426.553.222.985.355 1.321.455.554.164 1.058.141 1.456.086.444-.062 1.369-.56 1.562-1.101.193-.541.193-1.005.135-1.102-.058-.097-.212-.155-.443-.27z"/></svg>
+                    Hantar via WhatsApp
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <button class="back-top" id="backTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+
+    <footer class="footer-ko">
+        <div class="footer-ko-inner">
+            <span class="footer-ko-copy">&copy; 2026 HAPYPO ENTERPRISE</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            setTimeout(function() {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 600);
+
+            var overlay = document.getElementById('pageOverlay');
+            document.querySelectorAll('.nav-pill a, .nav-logo').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href && !href.startsWith('#') && href !== window.location.pathname.split('/').pop()) {
+                        e.preventDefault();
+                        overlay.classList.add('active');
+                        var self = this;
+                        setTimeout(function() {
+                            window.location.href = self.getAttribute('href');
+                        }, 400);
+                    }
+                });
+            });
+
+            /* ─── NAV ACTIVE ─── */
+            var current = window.location.pathname.split('/').pop() || 'geran-mara.html';
+            document.querySelectorAll('.nav-pill a').forEach(function(a) {
+                var h = a.getAttribute('href');
+                if (h === current) { a.classList.add('active'); }
+            });
+
+            var pb = document.getElementById('progressBar');
+            var bt = document.getElementById('backTop');
+
+            function updateScrollUI() {
+                var h = document.documentElement.scrollHeight - window.innerHeight;
+                pb.style.width = (window.scrollY / h * 100) + '%';
+                bt.classList.toggle('visible', window.scrollY > 400);
+            }
+
+            /* ─── LENIS ─── */
+            if (typeof Lenis !== 'undefined') {
+                var lenis = new Lenis();
+                lenis.on('scroll', function(e) { updateScrollUI(); });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            }
+            window.addEventListener('scroll', updateScrollUI);
+
+            bt.addEventListener('click', function() {
+                if (typeof lenis !== 'undefined') { lenis.scrollTo(0); }
+                else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            });
+
+            /* ─── SMOOTH ANCHOR ─── */
+            document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        if (typeof lenis !== 'undefined') { lenis.scrollTo(target); }
+                        else { target.scrollIntoView({ behavior: 'smooth' }); }
+                    }
+                });
+            });
+
+            /* ─── SECTION REVEAL ─── */
+            var revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+            /* ─── MAGNETIC ─── */
+            document.querySelectorAll('.magnetic').forEach(function(el) {
+                el.addEventListener('mousemove', function(e) {
+                    var r = this.getBoundingClientRect();
+                    var x = e.clientX - r.left - r.width / 2;
+                    var y = e.clientY - r.top - r.height / 2;
+                    this.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+                });
+                el.addEventListener('mouseleave', function() { this.style.transform = ''; });
+            });
+
+            /* ─── CURSOR ─── */
+            var isTouch = window.matchMedia('(pointer: coarse)').matches;
+            if (!isTouch) {
+                var cursor = document.getElementById('cursorDiff');
+                var mx = 0, my = 0, cx = 0, cy = 0;
+                document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+                function animCursor() {
+                    cx += (mx - cx) * 0.15;
+                    cy += (my - cy) * 0.15;
+                    cursor.style.left = cx + 'px';
+                    cursor.style.top = cy + 'px';
+                    requestAnimationFrame(animCursor);
+                }
+                animCursor();
+                document.querySelectorAll('a, button, .geran-step').forEach(function(el) {
+                    el.addEventListener('mouseenter', function() { cursor.classList.add('scale'); });
+                    el.addEventListener('mouseleave', function() { cursor.classList.remove('scale'); });
+                });
+            }
+
+            /* ─── FORM WHATSAPP ─── */
+            document.getElementById('geranForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var name = document.getElementById('geranName').value.trim();
+                var phone = document.getElementById('geranPhone').value.trim();
+                var business = document.getElementById('geranBusiness').value.trim();
+                var type = document.getElementById('geranType').value.trim();
+                var email = document.getElementById('geranEmail').value.trim();
+                var msg = document.getElementById('geranMessage').value.trim();
+                var text = 'Hi Hapypo Design, saya ingin mendaftar GERAN MARA.\n\n'
+                    + 'Nama: ' + name + '\n'
+                    + 'No. Telefon: ' + phone + '\n'
+                    + 'Perniagaan: ' + business + '\n'
+                    + 'Jenis: ' + type + '\n';
+                if (email) text += 'Email: ' + email + '\n';
+                if (msg) text += 'Mesej: ' + msg;
+                window.open('https://wa.me/60123456789?text=' + encodeURIComponent(text), '_blank');
+            });
+
+        });
+    </script>
+</body>
+</html>
