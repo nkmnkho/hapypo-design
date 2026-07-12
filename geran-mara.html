@@ -272,20 +272,20 @@
     <div class="cursor-diff" id="cursorDiff"></div>
 
     <nav class="nav">
-        <a href="kinetic-orange.html" class="nav-logo"><img src="images/logo.svg.png" alt="Hapypo Design"></a>
+        <a href="/" class="nav-logo"><img src="images/logo.svg.png" alt="Hapypo Design"></a>
         <div class="nav-pill">
-            <a href="kinetic-orange.html">Home</a>
-            <a href="index.html">Work</a>
-            <a href="kinetic-orange.html#about">About</a>
-            <a href="geran-mara.html">MARA</a>
-            <a href="kinetic-orange.html#contact">Contact</a>
+            <a href="/">Home</a>
+            <a href="/work">Work</a>
+            <a href="/#about">About</a>
+            <a href="/mara">MARA</a>
+            <a href="/#contact">Contact</a>
         </div>
 
     </nav>
 
     <section class="geran-hero reveal">
         <div>
-            <a href="kinetic-orange.html" class="geran-back">
+            <a href="/" class="geran-back">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </a>
@@ -423,11 +423,12 @@
                 document.getElementById('loadingScreen').classList.add('hidden');
             }, 600);
 
+            var currentPath = window.location.pathname.replace(/\/$/, '') || '/';
             var overlay = document.getElementById('pageOverlay');
             document.querySelectorAll('.nav-pill a, .nav-logo').forEach(function(link) {
                 link.addEventListener('click', function(e) {
                     var href = this.getAttribute('href');
-                    if (href && !href.startsWith('#') && href !== window.location.pathname.split('/').pop()) {
+                    if (href && !href.startsWith('#') && href !== currentPath) {
                         e.preventDefault();
                         overlay.classList.add('active');
                         var self = this;
@@ -439,10 +440,9 @@
             });
 
             /* ─── NAV ACTIVE ─── */
-            var current = window.location.pathname.split('/').pop() || 'geran-mara.html';
             document.querySelectorAll('.nav-pill a').forEach(function(a) {
                 var h = a.getAttribute('href');
-                if (h === current) { a.classList.add('active'); }
+                if (h === currentPath) { a.classList.add('active'); }
             });
 
             var pb = document.getElementById('progressBar');
