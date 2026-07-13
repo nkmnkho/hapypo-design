@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/"
+  to = "/kinetic-orange.html"
+  status = 200
+
+[[redirects]]
+  from = "/work"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/mara"
+  to = "/geran-mara.html"
+  status = 200
